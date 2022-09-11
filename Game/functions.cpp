@@ -16,6 +16,7 @@ short SToaDoY;
 
 //Cap nhat trang thai choi game
 bool BTrangThaiChoiGame = false;
+short TongMuc, ViTriChon, Trang;
 
 void taoMang2ChieuDong()
 {
@@ -433,4 +434,35 @@ void veTrangThaiChoiGame(short STrangThai)
 		printf("%c", 45);
 	}
 
+} 
+void veMenu(short index) {
+	// cap nhat lai vi tri dang chon va tong muc cua menu
+	ViTriChon = index;
+	TongMuc = 4;
+	// ve menu
+	LPSTR STRTextMenuChinh = const_cast <char*>("  Game Moi  ");
+	setColorBGTextXY((ConsoleWidth / 2) - (strlen(STRTextMenuChinh) / 2) + 1, 7, 15, ((index == 0) ? 2 : 0), STRTextMenuChinh);
+	STRTextMenuChinh = const_cast <char*>("  Bang Diem  ");
+	setColorBGTextXY((ConsoleWidth / 2) - (strlen(STRTextMenuChinh) / 2), 8, 15, ((index == 1) ? 2 : 0), STRTextMenuChinh);
+	STRTextMenuChinh = const_cast <char*>("  Thong Tin  ");
+	setColorBGTextXY((ConsoleWidth / 2) - (strlen(STRTextMenuChinh) / 2), 9, 15, ((index == 2) ? 2 : 0), STRTextMenuChinh);
+	STRTextMenuChinh = const_cast <char*>("  Thoat  ");
+	setColorBGTextXY((ConsoleWidth / 2) - (strlen(STRTextMenuChinh) / 2), 10, 15, ((index == 3) ? 2 : 0), STRTextMenuChinh);
+
+}
+void MenuDoKho(short index) {
+	// cap nhat lai vi tri dang chon va tong muc cua menu
+	ViTriChon = index;
+	TongMuc = 4;
+	LPSTR STRTextMenuChinh = const_cast <char*>("Chon Cap Do");
+	setColorBGTextXY((ConsoleWidth / 2) - (strlen(STRTextMenuChinh) / 2), 4, 1, 0, STRTextMenuChinh);
+	// ve menu
+	STRTextMenuChinh = const_cast <char*>("  De  ");
+	setColorBGTextXY((ConsoleWidth / 2) - (strlen(STRTextMenuChinh) / 2), 7, 15, ((index == 0) ? 2 : 0), STRTextMenuChinh);
+	STRTextMenuChinh = const_cast <char*>("  Trung Binh  ");
+	setColorBGTextXY((ConsoleWidth / 2) - (strlen(STRTextMenuChinh) / 2), 8, 15, ((index == 1) ? 2 : 0), STRTextMenuChinh);
+	STRTextMenuChinh = const_cast <char*>("  Kho  ");
+	setColorBGTextXY((ConsoleWidth / 2) - (strlen(STRTextMenuChinh) / 2), 9, 15, ((index == 2) ? 2 : 0), STRTextMenuChinh);
+	STRTextMenuChinh = const_cast <char*>("  Tro Ve  ");
+	setColorBGTextXY((ConsoleWidth / 2) - (strlen(STRTextMenuChinh) / 2), 10, 15, ((index == 3) ? 2 : 0), STRTextMenuChinh);
 }

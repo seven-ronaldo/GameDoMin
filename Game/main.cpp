@@ -8,9 +8,11 @@ int main()
     SetConsoleTitle(TEXT("Game Do Min"));//Dat tieu de game
     veTieuDeGame();
 
-    khoiTao(9, 9, 10);
+    //khoiTao(9, 9, 10);
     Cursor(false);//An con tro
-    veTrangThaiChoiGame(1);
+   // veTrangThaiChoiGame(1);
+    //veMenu(0);
+    MenuDoKho(0);
     xuLySuKien();
     /*std::cout << std::endl << std::endl;
     system("pause");*/
