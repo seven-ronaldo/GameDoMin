@@ -14,3 +14,5 @@ void thua();
 //design
 void veTieuDeGame();
 void veTrangThaiChoiGame(short STrangThai);
+void veMenu(short index);
+void MenuDoKho(short index);
