@@ -23,5 +23,7 @@ struct CauTrucO
 	bool BDaMo = false;
 	bool BCamCo = false;
 	short SBomLanCan = 0;
-
 };
+
+//Trang, Vi tri dang chon, Tong muc
+extern short STrang, SViTriChon, STongMuc;

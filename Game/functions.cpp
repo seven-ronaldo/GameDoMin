@@ -17,6 +17,8 @@ short SToaDoY;
 //Cap nhat trang thai choi game
 bool BTrangThaiChoiGame = false;
 
+
+
 void taoMang2ChieuDong()
 {
 	CTO = new CauTrucO * [CTBang.SDong];
@@ -38,7 +40,7 @@ void xoaMang2ChieuDong()
 void luuToaDoBang()
 {
 	SToaDoX = ((ConsoleWidth / 2) - CTBang.SDong);
-	SToaDoY = (((ConsoleHeight - 6) - CTBang.SCot) / 2) + 6;
+	SToaDoY = (((ConsoleHeight - 6) - CTBang.SCot) / 2) + 7;
 }
 
 void khoiTao(short SDong, short SCot, short SSoBom)
@@ -55,6 +57,7 @@ void khoiTao(short SDong, short SCot, short SSoBom)
 	CViTriConTro = { 0, 0 };
 	BTrangThaiChoiGame = true;
 	veBang();
+	veTrangThaiChoiGame(1, 0, 0);
 
 	//xoaMang2ChieuDong();
 }
@@ -117,7 +120,7 @@ void veO(short SX, short SY, short SKieu)
 		setColorBGTextXY(toaDoX(SX), toaDoY(SY), 12, 14, const_cast<char*> ("P "));
 		break;
 	case 14://Cam co ko co bom -> cam co sai
-		setColorBGTextXY(toaDoX(SX), toaDoY(SY), 15, 6, const_cast<char*> ("Px "));
+		setColorBGTextXY(toaDoX(SX), toaDoY(SY), 15, 6, const_cast<char*> ("Px"));
 		break;
 	case 15://Cam co co bom -> cam co dung
 		setColorBGTextXY(toaDoX(SX), toaDoY(SY), 12, 14, const_cast<char*> ("B "));
@@ -257,8 +260,9 @@ void thang()
 {
 	BTrangThaiChoiGame = false;
 	xoaMang2ChieuDong();//Giai phong con tro
+	STrang = 5;
 	deleteRow(4, 1);
-	veTrangThaiChoiGame(2);//Cap nhat lai trang thai thang
+	veTrangThaiChoiGame(2, 2, 0);//Cap nhat lai trang thai thang
 }
 
 void thua()
@@ -284,8 +288,9 @@ void thua()
 	}
 	BTrangThaiChoiGame = false;
 	xoaMang2ChieuDong();//Giai phong con tro
+	STrang = 4;
 	deleteRow(4, 1);
-	veTrangThaiChoiGame(3);//cap nhat lai trang thai thua
+	veTrangThaiChoiGame(3, 3, 0);//cap nhat lai trang thai thua
 }
 
 void clickPhai(short SX, short SY)//Cam co
@@ -306,6 +311,15 @@ void clickPhai(short SX, short SY)//Cam co
 	veBang();
 }
 
+/* Y tuong xu ly menu:
+1) Trang menu chinh.
+2) Trang menu chon cap do.
+3) Trang choi game.
+4) Trang thua.
+5) Trang thang.
+6) Trang luu game
+*/
+
 void xuLyPhim(KEY_EVENT_RECORD key)
 {
 	if (key.bKeyDown)//Co nham phim
@@ -313,22 +327,82 @@ void xuLyPhim(KEY_EVENT_RECORD key)
 		switch (key.wVirtualKeyCode)
 		{
 		case VK_UP://Mui ten len
-			//std::cout << "Len " << std::endl;
-			if (BTrangThaiChoiGame) 
+			switch (STrang)
 			{
-				BSuDungPhim = true;
-				CViTriConTro.Y = ((CViTriConTro.Y == 0) ? CTBang.SDong - 1 : CViTriConTro.Y - 1);
-				veBang();
+			case 1://Menu chinh
+				if (STongMuc == 4)
+				{
+					if (SViTriChon == 0)
+						SViTriChon = STongMuc - 1;
+					else
+						SViTriChon -= 1;
+
+					veMenuChinh(SViTriChon);
+				}
+				break;
+			case 2://Menu chon cap do
+				if (STongMuc == 4)
+				{
+					if (SViTriChon == 0)
+						SViTriChon = STongMuc - 1;
+					else
+						SViTriChon -= 1;
+
+					veMenuCapDo(SViTriChon);
+				}
+				break;
+			case 3://Trang choi game
+				if (BTrangThaiChoiGame)
+				{
+					BSuDungPhim = true;
+					CViTriConTro.Y = ((CViTriConTro.Y == 0) ? CTBang.SDong - 1 : CViTriConTro.Y - 1);
+					veBang();
+				}
+				break;
+			case 4://Trang thua
+				break;
+			case 5://Trang thang
+				break;
 			}
 			break;
 		case VK_DOWN://Mui ten xuong
-			//std::cout << "Xuong " << std::endl;
-			if (BTrangThaiChoiGame)
+			switch (STrang)
 			{
-				BSuDungPhim = true;
-				CViTriConTro.Y = ((CViTriConTro.Y == CTBang.SDong - 1) ? 0 : CViTriConTro.Y + 1);
-				veBang();
-			}
+			case 1://Menu chinh
+				if (STongMuc == 4)
+				{
+					if (SViTriChon == STongMuc - 1)
+						SViTriChon = 0;
+					else
+						SViTriChon += 1;
+
+					veMenuChinh(SViTriChon);
+				}
+				break;
+			case 2://Menu chon cap do
+				if (STongMuc == 4)
+				{
+					if (SViTriChon == STongMuc -1)
+						SViTriChon = 0;
+					else
+						SViTriChon += 1;
+
+					veMenuCapDo(SViTriChon);
+				}
+				break;
+			case 3://Trang choi game
+				if (BTrangThaiChoiGame)
+				{
+					BSuDungPhim = true;
+					CViTriConTro.Y = ((CViTriConTro.Y == CTBang.SDong - 1) ? 0 : CViTriConTro.Y + 1);
+					veBang();
+				}
+				break;
+			case 4://Trang thua
+				break;
+			case 5://Trang thang
+				break;
+			} 
 			break;
 		case VK_LEFT://Mui ten trai
 			//std::cout << "Trai " << std::endl;
@@ -349,10 +423,83 @@ void xuLyPhim(KEY_EVENT_RECORD key)
 			}
 			break;
 		case VK_RETURN://Phim Enter
-			std::cout << "Enter " << std::endl;
+			switch (STrang)
+			{
+			case 1://Menu chinh
+				if (SViTriChon == 0)
+				{
+					STrang = 2;
+					deleteRow(4, 5);
+					veMenuCapDo(0);
+				}
+				else if (SViTriChon == 1)//Trang bang diem
+				{
+
+				}
+				else if (SViTriChon == 2)//Trang thong tin
+				{
+
+				}
+				else
+				{
+					exit(0);
+				}
+				break;
+			case 2://Menu chon cap do
+				if (SViTriChon == 0)//Muc de 9*9 va 10 bom	
+				{
+					STrang = 3;//Cap nhat lai la dang choi game
+					deleteRow(4, 10);
+					khoiTao(9, 9, 10);
+				}
+				else if (SViTriChon == 1)//Muc trung binh 16*16 va 40 bom
+				{
+					STrang = 3;//Cap nhat lai la dang choi game
+					deleteRow(4, 10);
+					khoiTao(16, 16, 40);
+				}
+				else if (SViTriChon == 2)//Muc kho 24*24 va 99 bom
+				{
+					STrang = 3;//Cap nhat lai la dang choi game
+					deleteRow(4, 10);
+					khoiTao(24, 24, 99);
+				}
+				else
+				{
+					STrang = 1;
+					deleteRow(4, 10);
+					veMenuChinh(0);
+				}
+				break;
+			case 4://Trang thua
+				break;
+			case 5://Trang thang
+				break;
+			}
 			break;
 		case VK_ESCAPE://Phim ESC(thoat)
-			std::cout << "ESC " << std::endl;
+			switch (STrang)
+			{
+			case 1://Menu chinh
+				exit(0);
+				break;
+			case 2://Menu chon cap do
+				STrang = 1;//Cap nhat lai thanh trang menu
+				deleteRow(4, 10);
+				veMenuChinh(0);
+				break;
+			case 3:
+				veTrangThaiChoiGame(1, 1, 0);
+				STrang = 6;
+				break;
+			case 4://Trang thua
+				break;
+			case 5://Trang thang
+				STrang = 2;
+				deleteRow(3, ConsoleHeight - 3);
+				veMenuCapDo(0);
+				break;
+			}
 			break;
 		case ClickTrai://Phim Z - Mo O
 			//std::cout << "Z" << std::endl;
@@ -413,18 +560,45 @@ void veTieuDeGame()
 	}
 }
 
-void veTrangThaiChoiGame(short STrangThai)
+void veTrangThaiChoiGame(short TrangThai, short SCheDo, short Index)
 {
+	SViTriChon = Index;
+	STongMuc = 2;
+
 	setColorBGTextXY(1, 3, 15, 0, const_cast<char*> ("Ban Do : %d * %d"), CTBang.SDong, CTBang.SCot);
 	setColorBGTextXY(1, 4, 15, 0, const_cast<char*> ("So Bom : %d"), CTBang.SSoBom);
 
+	//Ve menu thang thua
+	LPSTR STRTextMenuCheDo;
+	if (SCheDo == 1)
+	{
+		STRTextMenuCheDo = const_cast <char*>(" LUU LAI ");
+		setColorBGTextXY((ConsoleWidth / 2) - (strlen(STRTextMenuCheDo) / 2), 3, 15, ((Index == 0) ? 2 : 0), STRTextMenuCheDo);
+	}
+	if (SCheDo == 2)
+	{
+		STRTextMenuCheDo = const_cast <char*>(" LUU TEN ");
+		setColorBGTextXY((ConsoleWidth / 2) - (strlen(STRTextMenuCheDo) / 2), 3, 15, ((Index == 0) ? 2 : 0), STRTextMenuCheDo);
+	}
+	if (SCheDo == 3)
+	{
+		STRTextMenuCheDo = const_cast <char*>(" CHOI LAI ");
+		setColorBGTextXY((ConsoleWidth / 2) - (strlen(STRTextMenuCheDo) / 2) + 1, 3, 15, ((Index == 0) ? 2 : 0), STRTextMenuCheDo);
+	}
+
+	if (SCheDo >= 1)
+	{
+		STRTextMenuCheDo = const_cast <char*>(" THOAT ");
+		setColorBGTextXY((ConsoleWidth / 2) - (strlen(STRTextMenuCheDo) / 2), 4, 15, ((Index == 1) ? 2 : 0), STRTextMenuCheDo);
+	}
+
 	//Ve text trang thai
-	if (STrangThai == 1) // 1 Dang choi game
+	if (TrangThai == 1) // 1 Dang choi game
 		setColorBGTextXY(ConsoleWidth - 22, 4, 15, 0, const_cast<char*> ("Trang Thai : %s"), const_cast < char*> ("Dang choi"));
-	if (STrangThai == 2) // 2 Dang choi game
-		setColorBGTextXY(ConsoleWidth - 22, 4, 15, 0, const_cast<char*> ("Trang Thai : %s"), const_cast < char*>("Thang"));
-	if (STrangThai == 3) // 3 Dang choi game
-		setColorBGTextXY(ConsoleWidth - 22, 4, 15, 0, const_cast<char*> ("Trang Thai : %s"), const_cast < char*>("Thua"));
+	if (TrangThai == 2) // 2 Dang choi game
+		setColorBGTextXY(ConsoleWidth - 22, 4, 14, 0, const_cast<char*> ("Trang Thai : %s"), const_cast < char*>("Thang"));
+	if (TrangThai == 3) // 3 Dang choi game
+		setColorBGTextXY(ConsoleWidth - 22, 4, 12, 0, const_cast<char*> ("Trang Thai : %s"), const_cast < char*>("Thua"));
 	std::cout << std::endl;
 	setColor(7);
 	short i;
@@ -432,5 +606,47 @@ void veTrangThaiChoiGame(short STrangThai)
 	{
 		printf("%c", 45);
 	}
+}
 
+void veMenuChinh(short Index)
+{
+	//Cap nhat lai vi tri dang chon va tong muc cua menu
+	SViTriChon = Index;
+	STongMuc = 4;
+
+	//Ve menu
+	LPSTR STRTextMenuChinh = const_cast < char*>(" TRO CHOI MOI ");
+	setColorBGTextXY((ConsoleWidth / 2) - (strlen(STRTextMenuChinh) / 2) + 1, 7, 15, ((Index == 0) ? 2 : 0), STRTextMenuChinh);
+
+	STRTextMenuChinh = const_cast < char*>(" BANG DIEM ");
+	setColorBGTextXY((ConsoleWidth / 2) - (strlen(STRTextMenuChinh) / 2), 8, 15, ((Index == 1) ? 2 : 0), STRTextMenuChinh);
+
+	STRTextMenuChinh = const_cast < char*>(" THONG TIN ");
+	setColorBGTextXY((ConsoleWidth / 2) - (strlen(STRTextMenuChinh) / 2), 9, 15, ((Index == 2) ? 2 : 0), STRTextMenuChinh);
+
+	STRTextMenuChinh = const_cast < char*>(" THOAT ");
+	setColorBGTextXY((ConsoleWidth / 2) - (strlen(STRTextMenuChinh) / 2), 10, 15, ((Index == 3) ? 2 : 0), STRTextMenuChinh);
+}
+
+void veMenuCapDo(short Index)
+{
+	//Cap nhat lai vi tri dang chon va tong muc cua menu
+	SViTriChon = Index;
+	STongMuc = 4;
+
+	//Ve menu
+	LPSTR STRTextMenuChinh = const_cast <char*>(" CHON CAP DO ");
+	setColorBGTextXY((ConsoleWidth / 2) - (strlen(STRTextMenuChinh) / 2), 4, 1, 0, STRTextMenuChinh);
+
+	STRTextMenuChinh = const_cast <char*>(" DE (9 * 9 VA 10 BOM) ");
+	setColorBGTextXY((ConsoleWidth / 2) - (strlen(STRTextMenuChinh) / 2), 7, 15, ((Index == 0) ? 2 : 0), STRTextMenuChinh);
+
+	STRTextMenuChinh = const_cast <char*>(" TRUNG BINH (16 * 16 VA 40 BOM) ");
+	setColorBGTextXY((ConsoleWidth / 2) - (strlen(STRTextMenuChinh) / 2), 8, 15, ((Index == 1) ? 2 : 0), STRTextMenuChinh);
+
+	STRTextMenuChinh = const_cast <char*>(" KHO (24 * 24 VA 99 BOM) ");
+	setColorBGTextXY((ConsoleWidth / 2) - (strlen(STRTextMenuChinh) / 2), 9, 15, ((Index == 2) ? 2 : 0), STRTextMenuChinh);
+
+	STRTextMenuChinh = const_cast <char*>(" QUAY LAI ");
+	setColorBGTextXY((ConsoleWidth / 2) - (strlen(STRTextMenuChinh) / 2), 10, 15, ((Index == 3) ? 2 : 0), STRTextMenuChinh);
 }
