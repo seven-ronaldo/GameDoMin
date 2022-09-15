@@ -16,3 +16,4 @@ void veTieuDeGame();
 void veTrangThaiChoiGame(short TrangThai, short SCheDo, short Index);
 void veMenuChinh(short Index);
 void veMenuCapDo(short Index);
+void veThongTin(short Index);

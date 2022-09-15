@@ -1,6 +1,10 @@
 #pragma once
 #include <iostream>
 #include <ctime>
+#include"resource.h"
+#include<Windows.h>
+#pragma comment(lib, "winmm.lib")
+//#define sound(fileName)(PlaySound(MAKEINTRESOURCE(IDR_WAVE1),GetModuleHandle(NULL),SND_RESOURCE | SND_ASYNC));
 
 #define ConsoleWidth 80
 #define ConsoleHeight 35

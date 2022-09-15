@@ -11,7 +11,7 @@ int main()
     resizeConsole(ConsoleWidth, ConsoleHeight);//Thay doi kich thuoc man hinh console
     SetConsoleTitle(TEXT("Game Do Min"));//Dat tieu de game
     veTieuDeGame();
-
+   // LoadIcon(NULL,);//Thay doi iocn.exe
     Cursor(false);//An con tro
     veMenuChinh(0);
     STrang = 1;

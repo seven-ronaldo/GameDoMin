@@ -1,7 +1,7 @@
 #include "main.h"
 #include "functions.h"
 #include "Console.h"
-
+#include<MMsystem.h>
 CauTrucBang CTBang;
 CauTrucO** CTO;
 
@@ -291,6 +291,7 @@ void thua()
 	STrang = 4;
 	deleteRow(4, 1);
 	veTrangThaiChoiGame(3, 3, 0);//cap nhat lai trang thai thua
+	//sound(IDR_WAVE1);
 }
 
 void clickPhai(short SX, short SY)//Cam co
@@ -309,6 +310,8 @@ void clickPhai(short SX, short SY)//Cam co
 		}
 	}
 	veBang();
+	deleteRow(4, 1);
+	veTrangThaiChoiGame(1, 0, 0);
 }
 
 /* Y tuong xu ly menu:
@@ -360,8 +363,10 @@ void xuLyPhim(KEY_EVENT_RECORD key)
 				}
 				break;
 			case 4://Trang thua
+				veTrangThaiChoiGame(3, 3, (SViTriChon==0)?1:0);
 				break;
 			case 5://Trang thang
+				veTrangThaiChoiGame(2, 2, (SViTriChon==0)?1:0);
 				break;
 			}
 			break;
@@ -399,8 +404,10 @@ void xuLyPhim(KEY_EVENT_RECORD key)
 				}
 				break;
 			case 4://Trang thua
+				veTrangThaiChoiGame(3, 3, (SViTriChon==0)?1:0);
 				break;
 			case 5://Trang thang
+				veTrangThaiChoiGame(3, 2, (SViTriChon==0)?1:0);
 				break;
 			} 
 			break;
@@ -438,7 +445,7 @@ void xuLyPhim(KEY_EVENT_RECORD key)
 				}
 				else if (SViTriChon == 2)//Trang thong tin
 				{
-
+					
 				}
 				else
 				{
@@ -472,8 +479,28 @@ void xuLyPhim(KEY_EVENT_RECORD key)
 				}
 				break;
 			case 4://Trang thua
+				if (SViTriChon) {
+					STrang = 1;
+					deleteRow(3, ConsoleHeight - 3);
+					veMenuChinh(0);
+				}
+				else {
+					STrang = 3;
+					deleteRow(3, ConsoleHeight - 3);
+					khoiTao(CTBang.SDong, CTBang.SCot, CTBang.SSoBom);
+				}
 				break;
 			case 5://Trang thang
+				break;
+			case 6://Trang luu game
+				if (SViTriChon) {
+					STrang = 1;
+					deleteRow(3, ConsoleHeight - 3);
+					veMenuChinh(0);
+				}
+				else {
+					//Luu game-> xu ly file
+				}
 				break;
 			}
 			break;
@@ -566,7 +593,7 @@ void veTrangThaiChoiGame(short TrangThai, short SCheDo, short Index)
 	STongMuc = 2;
 
 	setColorBGTextXY(1, 3, 15, 0, const_cast<char*> ("Ban Do : %d * %d"), CTBang.SDong, CTBang.SCot);
-	setColorBGTextXY(1, 4, 15, 0, const_cast<char*> ("So Bom : %d"), CTBang.SSoBom);
+	setColorBGTextXY(1, 4, 15, 0, const_cast<char*> ("So Bom : %d"), CTBang.SSoBom-CTBang.SSoCo);
 
 	//Ve menu thang thua
 	LPSTR STRTextMenuCheDo;
@@ -650,3 +677,23 @@ void veMenuCapDo(short Index)
 	STRTextMenuChinh = const_cast <char*>(" QUAY LAI ");
 	setColorBGTextXY((ConsoleWidth / 2) - (strlen(STRTextMenuChinh) / 2), 10, 15, ((Index == 3) ? 2 : 0), STRTextMenuChinh);
 }
+/*void veThongTin(short Index) {
+	SViTriChon = Index;
+	STongMuc = 4;
+
+	//Ve menu
+	LPSTR STRTextMenuChinh = const_cast <char*>(" CACH CHOI ");
+	setColorBGTextXY((ConsoleWidth / 2) - (strlen(STRTextMenuChinh) / 2), 4, 1, 0, STRTextMenuChinh);
+
+	STRTextMenuChinh = const_cast <char*>(" Su dung cac phim mui ten de di chuyen giua cac o. Phim z de chon o. Phim x de dat co ");
+	setColorBGTextXY((ConsoleWidth / 2) - (strlen(STRTextMenuChinh) / 2), 7, 15, ((Index == 0) ? 2 : 0), STRTextMenuChinh);
+
+	STRTextMenuChinh = const_cast <char*>(" VO ANH HAO ");
+	setColorBGTextXY((ConsoleWidth / 2) - (strlen(STRTextMenuChinh) / 2), 8, 15, ((Index == 1) ? 2 : 0), STRTextMenuChinh);
+
+	STRTextMenuChinh = const_cast <char*>(" NGO VAN THO ");
+	setColorBGTextXY((ConsoleWidth / 2) - (strlen(STRTextMenuChinh) / 2), 9, 15, ((Index == 2) ? 2 : 0), STRTextMenuChinh);
+
+	STRTextMenuChinh = const_cast <char*>(" QUAY LAI ");
+	setColorBGTextXY((ConsoleWidth / 2) - (strlen(STRTextMenuChinh) / 2), 8, 15, ((Index == 3) ? 2 : 0), STRTextMenuChinh);
+}*/
